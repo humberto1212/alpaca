@@ -20,8 +20,8 @@ type ErrorHandler func(w http.ResponseWriter, r *http.Request, err error)
 
 func NewAlpaca(port int) *Server {
 	s := &Server{
-		port: port,
-		//middlewares  []Middleware{}
+		port:        port,
+		middlewares: []Middleware{},
 	}
 
 	s.Router = NewRouter(s)
@@ -40,7 +40,7 @@ func (s *Server) Run() error {
 		Handler: s,
 	}
 
-	fmt.Printf("Server starting on port %d\n", s.port)
+	fmt.Printf("Alpaca server starting on port %d\n", s.port)
 	return s.server.ListenAndServe()
 }
 
