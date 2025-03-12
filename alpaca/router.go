@@ -87,6 +87,10 @@ func isWildCardMatch(routePath, requestPath string) bool {
 			continue
 		}
 
+		if part == ":id" {
+			continue
+		}
+
 		if part != requestParts[i] {
 			return false
 		}
