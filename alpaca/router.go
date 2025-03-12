@@ -108,7 +108,7 @@ func (r *Router) ServerHTTP(w http.ResponseWriter, req *http.Request) {
 	}
 
 	if r.server != nil {
-		r.server.ApplyMiddleware(handler)
+		handler = r.server.ApplyMiddleware(handler)
 	}
 
 	handler(w, req)
