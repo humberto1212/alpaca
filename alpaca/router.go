@@ -18,6 +18,7 @@ func NewRouter(server *Server) *Router {
 
 	return &Router{
 		routes:          make(map[string]map[string]Handler),
+		server:          server,
 		notFoundHandler: defaultNotFoundHandler,
 	}
 }
