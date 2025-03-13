@@ -20,8 +20,9 @@ type ErrorHandler func(w http.ResponseWriter, r *http.Request, err error)
 
 func NewAlpaca(port int) *Server {
 	s := &Server{
-		port:        port,
-		middlewares: []Middleware{},
+		port:         port,
+		middlewares:  []Middleware{},
+		errorHandler: DefaultErrorHandler,
 	}
 
 	s.Router = NewRouter(s)
