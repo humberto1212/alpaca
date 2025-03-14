@@ -8,7 +8,7 @@ import (
 
 type Server struct {
 	port         int
-	Router       *Router
+	router       *Router
 	middlewares  []Middleware
 	errorHandler ErrorHandler
 	server       *http.Server
@@ -25,13 +25,13 @@ func NewAlpaca(port int) *Server {
 		errorHandler: DefaultErrorHandler,
 	}
 
-	s.Router = NewRouter(s)
+	s.router = NewRouter(s)
 
 	return s
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	s.Router.ServerHTTP(w, r)
+	s.router.ServerHTTP(w, r)
 }
 
 func (s *Server) Run() error {
@@ -50,7 +50,7 @@ func (s *Server) Shutdown(ctx context.Context) error {
 }
 
 func (s *Server) GetRouter() *Router {
-	return s.Router
+	return s.router
 }
 
 func WithErrorHandler(handler ErrorHandler) ServerOption {
