@@ -12,6 +12,7 @@ type Router struct {
 	routes          map[string]map[string]Handler
 	server          *Server
 	notFoundHandler Handler
+	cors            *Cors
 }
 
 func NewRouter(server *Server) *Router {
@@ -113,4 +114,26 @@ func (r *Router) ServerHTTP(w http.ResponseWriter, req *http.Request) {
 	}
 
 	handler(w, req)
+}
+
+func (r *Router) SetCors(allowAllOrigins, allowMethods, allowHeaders, exposeHeaders []string, allowCredentials bool, maxAge int) {
+
+	corsConfig := &Cors{
+		allowAllOrigins,
+		allowMethods,
+		allowHeaders,
+		exposeHeaders,
+		allowCredentials,
+		maxAge,
+	}
+
+	r.cors = newCors(corsConfig)
+
+	if r.server != nil {
+		r.server.Use(EnableCors(r.server.router))
+	}
+}
+
+func (r *Router) getCors() *Cors {
+	return r.cors
 }
